@@ -1,10 +1,12 @@
 package jihuayu.ancestralwealth.handler;
 
+import jihuayu.ancestralwealth.FirstLoginEvent;
 import jihuayu.ancestralwealth.ModMainConfig;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -19,6 +21,7 @@ public class LoginHandler {
             for (ItemStack i : ModMainConfig.items){
                 player.addItemStackToInventory(i);
             }
+            MinecraftForge.EVENT_BUS.post(new FirstLoginEvent(player));
             player.getPersistentData().putBoolean("ancestralwealth.first_login",true);
         }
     }
