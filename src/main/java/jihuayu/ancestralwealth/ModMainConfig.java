@@ -61,6 +61,9 @@ public final class ModMainConfig {
                 }
                 String nbt = m.group(2);
                 String num = m.group(3);
+                if (nbt == null) {
+                    nbt = "{}";
+                }
                 if (num == null) {
                     num = "*1";
                 }
