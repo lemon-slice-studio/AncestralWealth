@@ -49,39 +49,30 @@ public final class ModMainConfig {
         items.clear();
 
         List<? extends String> x = itemsCfg.get();
-        String pattern = "^(.+?)(#[0-9]*)??(\\{.+})??(\\*[0-9]+)??$";
+        String pattern = "^(.+?)(\\{.+})??(\\*[0-9]+)??$";
         Pattern r = Pattern.compile(pattern);
         for (String i : x) {
             Matcher m = r.matcher(i);
-                if (m.find()) {
-                    Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(m.group(1)));
-                    if (item==null||item.equals(Items.AIR)){
-                        ModMain.LOGGER.error(String.format("Cloud not found %s",m.group(1)));
-                        continue;
-                    }
-                    String damage = m.group(2);
-                    String nbt  = m.group(3);
-                    String num = m.group(4);
-                    if (damage==null){
-                        damage="#0";
-                    }
-                    if (nbt==null){
-                        nbt="{}";
-                    }
-                    if (num==null){
-                        num = "*1";
-                    }
-                    try {
-                        CompoundNBT tags = JsonToNBT.getTagFromJson(nbt);
-                        int n = Integer.parseInt(num.substring(1));
-                        ItemStack is = new ItemStack(item,n,tags);
-                        int dam = Integer.parseInt(damage.substring(1));
-                        is.setDamage(dam);
-                        items.add(is);
-                    } catch (CommandSyntaxException | NumberFormatException e) {
-                        ModMain.LOGGER.error(String.format("Cloud not parse nbt %s",m.group(0)));
-                    }
+            if (m.find()) {
+                Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(m.group(1)));
+                if (item == null || item.equals(Items.AIR)) {
+                    ModMain.LOGGER.error(String.format("Cloud not found %s", m.group(1)));
+                    continue;
                 }
+                String nbt = m.group(2);
+                String num = m.group(3);
+                if (num == null) {
+                    num = "*1";
+                }
+                try {
+                    CompoundNBT tags = JsonToNBT.getTagFromJson(nbt);
+                    int n = Integer.parseInt(num.substring(1));
+                    ItemStack is = new ItemStack(item, n, tags);
+                    items.add(is);
+                } catch (CommandSyntaxException | NumberFormatException e) {
+                    ModMain.LOGGER.error(String.format("Cloud not parse nbt %s", m.group(0)));
+                }
+            }
         }
     }
 
