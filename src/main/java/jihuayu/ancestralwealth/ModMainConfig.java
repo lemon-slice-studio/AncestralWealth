@@ -40,8 +40,7 @@ public final class ModMainConfig {
 
     private ModMainConfig(ForgeConfigSpec.Builder builder) {
         itemsCfg = builder
-                .comment("The items will give.")
-                .comment("such as apple#1.Will give 1 apple to player.")
+                .comment("The items will give.","such as apple#1.Will give 1 apple to player.")
                 .defineList("item", new ArrayList<>(), (i) -> true);
     }
 
