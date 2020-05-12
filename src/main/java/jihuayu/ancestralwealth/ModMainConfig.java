@@ -69,8 +69,10 @@ public final class ModMainConfig {
                 }
                 try {
                     CompoundNBT tags = JsonToNBT.getTagFromJson(nbt);
+                    System.out.println(tags.toString());
                     int n = Integer.parseInt(num.substring(1));
-                    ItemStack is = new ItemStack(item, n, tags);
+                    ItemStack is = new ItemStack(item, n);
+                    is.setTag(tags);
                     items.add(is);
                 } catch (CommandSyntaxException | NumberFormatException e) {
                     ModMain.LOGGER.error(String.format("Cloud not parse nbt %s", m.group(0)));
